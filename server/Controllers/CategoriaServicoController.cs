@@ -15,9 +15,9 @@ namespace server.Controllers
     }
     
     [HttpPost]
-    public ActionResult Add(CategoriaServico categoriaServico)
+    public ActionResult Add(string Descricao)
     {
-      var addCategoria = new CategoriaServico(categoriaServico.Id,categoriaServico.Descricao);
+      var addCategoria = new CategoriaServico(Descricao);
       _categoriaRepository.Add(addCategoria);
       return Ok();
     }

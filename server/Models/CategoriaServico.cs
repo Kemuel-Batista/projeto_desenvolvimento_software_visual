@@ -13,9 +13,8 @@ namespace server.Models
     public string Descricao { get => _descricao; set => _descricao = value; }
     
 
-    public CategoriaServico(int id, string descricao)
+    public CategoriaServico(string descricao)
     {
-      _id = id;
       _descricao = descricao;
     }
     
