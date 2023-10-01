@@ -48,6 +48,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
+builder.Services.AddTransient<ICategoriaServicoRepository, CategoriaServicoRepository>();
+builder.Services.AddTransient<IPrestadoresRepository, PrestadoresRepository>();
+builder.Services.AddTransient<IServicosRepository, ServicosRepository>();
+
 
 var key = Encoding.ASCII.GetBytes(server.Key.Secret);
 
