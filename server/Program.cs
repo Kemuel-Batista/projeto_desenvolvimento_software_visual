@@ -50,11 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
 builder.Services.AddTransient<ICategoriaServicoRepository, CategoriaServicoRepository>();
 builder.Services.AddTransient<IPrestadoresRepository, PrestadoresRepository>();
-<<<<<<< HEAD
-=======
 builder.Services.AddTransient<IServicosRepository, ServicosRepository>();
->>>>>>> feature/kawany
-
 
 var key = Encoding.ASCII.GetBytes(server.Key.Secret);
 
