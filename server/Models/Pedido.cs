@@ -8,24 +8,46 @@ namespace server.Models
   {
     private int _id;
     private int _id_servico;
-    private char _status;
+    private string _cpf_cliente;
+    private string _status;
     private DateTime _created_at;
 
     [Key]
-    public int id { get => _id; set => _id = value; }
-    public int id_servico { get => _id_servico; set => _id_servico = value; }
+    [Column("id")]
+    public int Id { get => _id; set => _id = value; }
 
-    [ForeignKey("id_servico")]
+    [Column("id_servico")]
+    public int Id_Servico { get => _id_servico; set => _id_servico = value; }
+
+    [ForeignKey("Id_Servico")]
     public virtual Servicos Servicos { get; set; }
-    public char status { get => _status; set => _status = value; }
-    public DateTime created_at { get => _created_at; set => _created_at = value; }
 
-    public Pedido(int id, int id_servico, char status)
+    [Column("cpf_cliente")]
+    public string Cpf_Cliente { get => _cpf_cliente; set => _cpf_cliente = value; }
+
+    [ForeignKey("Cpf_Cliente")]
+    public virtual Cliente Cliente { get; set; }
+
+    [Column("status")]
+    public string Status { get => _status; set => _status = value; }
+
+    [Column("created_at")]
+    public DateTime Created_At { get => _created_at; set => _created_at = value; }
+
+    public Pedido()
     {
-      _id = id;
+      Id = 0;
+      Status = string.Empty;
+      Cpf_Cliente = string.Empty;
+      Id_Servico = 0;
+      Created_At = DateTime.UtcNow;
+    }
+    public Pedido(int id_servico, string cpf_cliente, string status)
+    {
       _id_servico = id_servico;
       _status = status;
-      _created_at = DateTime.Now;
+      _cpf_cliente = cpf_cliente;
+      _created_at = DateTime.UtcNow;
     }
   }
 }

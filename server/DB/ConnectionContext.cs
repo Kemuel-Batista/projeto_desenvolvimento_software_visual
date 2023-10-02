@@ -17,7 +17,7 @@ public class ConnectionContext : DbContext
       "Port=5432;" +
       "Database=projeto_ds_visual;" +
       "User Id=postgres;" +
-      "Password=01021993;"
+      "Password=01021993@Kb;"
     );
   }
 }

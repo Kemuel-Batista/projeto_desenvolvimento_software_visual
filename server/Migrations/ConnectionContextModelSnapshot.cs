@@ -74,24 +74,36 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Pedido", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Cpf_Cliente")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("cpf_cliente");
 
-                    b.Property<int>("id_servico")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("Created_At")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
-                    b.Property<char>("status")
-                        .HasColumnType("character(1)");
+                    b.Property<int>("Id_Servico")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_servico");
 
-                    b.HasKey("id");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
 
-                    b.HasIndex("id_servico");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Cpf_Cliente");
+
+                    b.HasIndex("Id_Servico");
 
                     b.ToTable("pedidos");
                 });
@@ -159,11 +171,19 @@ namespace server.Migrations
 
             modelBuilder.Entity("server.Models.Pedido", b =>
                 {
-                    b.HasOne("server.Models.Servicos", "Servicos")
+                    b.HasOne("server.Models.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("id_servico")
+                        .HasForeignKey("Cpf_Cliente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("server.Models.Servicos", "Servicos")
+                        .WithMany()
+                        .HasForeignKey("Id_Servico")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
 
                     b.Navigation("Servicos");
                 });
