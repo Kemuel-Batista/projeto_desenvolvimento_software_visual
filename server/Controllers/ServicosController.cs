@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
 
@@ -15,21 +14,33 @@ namespace server.Controllers
     }
     
     [HttpPost]
-    public ActionResult Add(string nome, double valor, int idCategoria, string cpfPrestador)
+    public ActionResult Add(string nome, double valor, int idCategoria)
     {
-      var addServicos = new Servicos(nome,valor,idCategoria,cpfPrestador);
-      _servicosRepository.Add(addServicos);
-      return Ok();
+      var cpfPrestador = User?.Identity?.Name;
+      if(cpfPrestador != null)
+      {
+        var addServicos = new Servicos(nome,valor,idCategoria,cpfPrestador);
+        _servicosRepository.Add(addServicos);
+        return Ok();
+      }
+      return BadRequest("Cpf não existe!");
     }
 
     [HttpPut]
-    public ActionResult Alterar(int id, string nome, double valor, int idCategoria, string cpfPrestador)
+    public ActionResult Alterar(int id, string nome, double valor, int idCategoria)
     {
-      if(id != 0){
-        _servicosRepository.Update(id, nome, valor, idCategoria, cpfPrestador);
-        return Ok();
+      var cpfPrestador = User?.Identity?.Name;
+      if(cpfPrestador != null)
+      {
+        if(id != 0)
+        {
+          _servicosRepository.Update(id, nome, valor, idCategoria, cpfPrestador);
+          return Ok();
+        } else {
+          return BadRequest("ID não pode ser nulo!");
+        }
       }
-      return BadRequest("nome não existe!");
+      return BadRequest("Não foi possível alterar o serviço!");
     }
 
     [HttpGet]

@@ -9,37 +9,47 @@ namespace server.Controllers
   public class AvaliacaoController : ControllerBase
   {
     private readonly IAvaliacaoRepository _avaliacaoRepository;
-    public AvaliacaoController(IAvaliacaoRepository avaliacaoRepository)
+    private readonly ILogger<AvaliacaoController> _logger;
+    public AvaliacaoController(IAvaliacaoRepository avaliacaoRepository, ILogger<AvaliacaoController> logger)
     {
       _avaliacaoRepository = avaliacaoRepository;
+      _logger = logger;
     }
 
     [Authorize]
     [HttpPost]
-    public ActionResult Add(int id_pedido,  string avaliacao_cliente, string avaliacao_prestador)
+    public ActionResult Add(int id_pedido, string avaliacao)
     {
       var cpf = User?.Identity?.Name;
-      string conta = _avaliacaoRepository.pesquisarCpf(cpf);
 
-      if(cpf != null)
+      if (cpf != null)
       {
-          if(conta.Equals("Prestador"))
+        string conta = _avaliacaoRepository.pesquisarCpf(cpf);
+
+        if (conta.Equals("Prestador"))
+        {
+          Avaliacao avaliacaoprestador = new()
           {
-            var addavaliacaoprestador = new avaliacao(id_pedido, cpf, avaliacao_prestador);
-            _avaliacaoRepository.Add(addavaliacaoprestador);
-            return Ok();
-          }
-          if(conta.Equals("Cliente"))
-          {      
-            avaliacao avaliacaoCliente = new avaliacao();
-            avaliacaoCliente.id_pedido = id_pedido;
-            avaliacaoCliente.cpf_cliente = cpf;
-            avaliacaoCliente.avaliacao_cliente = avaliacao_cliente;
-            _avaliacaoRepository.Add(avaliacaoCliente);
-            return Ok();
-          }
-      }  
-        return BadRequest("CPF não existe!");
+            id_pedido = id_pedido,
+            avaliacao_prestador = avaliacao,
+            cpf_prestador = cpf
+          };
+          _avaliacaoRepository.Add(avaliacaoprestador);
+          return Ok();
+        }
+        if (conta.Equals("Cliente"))
+        {
+          Avaliacao avaliacaoCliente = new()
+          {
+            id_pedido = id_pedido,
+            avaliacao_cliente = avaliacao,
+            cpf_cliente = cpf
+          };
+          _avaliacaoRepository.Add(avaliacaoCliente);
+          return Ok();
+        }
+      }
+      return BadRequest("CPF não existe!");
 
     }
 
@@ -49,25 +59,26 @@ namespace server.Controllers
       var cpf = User?.Identity?.Name;
       string conta = _avaliacaoRepository.pesquisarCpf(cpf);
 
-      if(id != 0)
-      {  
-        _avaliacaoRepository.Update(conta, id,avaliacao);
+      if (id != 0)
+      {
+        _avaliacaoRepository.Update(conta, id, avaliacao);
         return Ok();
       }
       return BadRequest("id não existe!");
     }
 
     [HttpGet]
-    public IEnumerable<avaliacao> Get()
+    public IEnumerable<Avaliacao> Get()
     {
       return _avaliacaoRepository.List();
     }
 
     [HttpDelete]
-    public ActionResult DeleteAccount(int id)
+    public ActionResult DeleteAvaliacao(int id)
     {
-      if(id != 0){
-        _avaliacaoRepository.DeleteAccount(id);
+      if (id != 0)
+      {
+        _avaliacaoRepository.DeleteAvaliacao(id);
         return Ok();
       }
       return BadRequest("id não existe!");

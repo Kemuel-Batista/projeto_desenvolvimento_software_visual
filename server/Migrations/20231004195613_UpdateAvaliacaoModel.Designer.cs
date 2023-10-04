@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace server.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20231002121911_Banco")]
-    partial class Banco
+    [Migration("20231004195613_UpdateAvaliacaoModel")]
+    partial class UpdateAvaliacaoModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,37 @@ namespace server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("server.Models.Avaliacao", b =>
+                {
+                    b.Property<int>("id")
+                        .HasColumnType("integer")
+                        .HasColumnOrder(0);
+
+                    b.Property<int>("id_pedido")
+                        .HasColumnType("integer")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("avaliacao_cliente")
+                        .HasColumnType("text");
+
+                    b.Property<string>("avaliacao_prestador")
+                        .HasColumnType("text");
+
+                    b.Property<string>("cpf_cliente")
+                        .HasColumnType("text");
+
+                    b.Property<string>("cpf_prestador")
+                        .HasColumnType("text");
+
+                    b.HasKey("id", "id_pedido");
+
+                    b.HasIndex("cpf_cliente");
+
+                    b.HasIndex("cpf_prestador");
+
+                    b.ToTable("avaliacao");
+                });
 
             modelBuilder.Entity("server.Models.CategoriaServico", b =>
                 {
@@ -170,6 +201,21 @@ namespace server.Migrations
                     b.HasIndex("id_categoria_servico");
 
                     b.ToTable("servicos");
+                });
+
+            modelBuilder.Entity("server.Models.Avaliacao", b =>
+                {
+                    b.HasOne("server.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("cpf_cliente");
+
+                    b.HasOne("server.Models.Prestadores", "Prestadores")
+                        .WithMany()
+                        .HasForeignKey("cpf_prestador");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Prestadores");
                 });
 
             modelBuilder.Entity("server.Models.Pedido", b =>

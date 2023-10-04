@@ -9,7 +9,7 @@ public class ConnectionContext : DbContext
   public DbSet<Prestadores> Prestador { get; set; }
   public DbSet<Servicos> Servicos { get; set; }
   public DbSet<Pedido> Pedido { get; set; }
-  public DbSet<avaliacao> avaliacao { get; set; }
+  public DbSet<Avaliacao> avaliacao { get; set; }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {

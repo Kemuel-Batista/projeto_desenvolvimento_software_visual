@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace server.Models
 {
   public interface IAvaliacaoRepository
   {
-    void Add(avaliacao avaliaca);
+    void Add(Avaliacao avaliaca);
     void Update(string conta, int id, string avaliacao);
-    void DeleteAccount(int id);
+    void DeleteAvaliacao(int id);
     string pesquisarCpf(string cpf);
-    IEnumerable<avaliacao> List();
+    IEnumerable<Avaliacao> List();
   }
 }

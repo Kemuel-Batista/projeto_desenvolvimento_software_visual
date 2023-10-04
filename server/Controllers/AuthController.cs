@@ -14,8 +14,9 @@ namespace server.Controllers
       _context = context;
     }
 
+    [Route("/cliente")]
     [HttpPost]
-    public IActionResult Auth(string email, string password)
+    public IActionResult AuthCliente(string email, string password)
     {
       var client = _context.Cliente.FirstOrDefault(client => client.Email == email && client.Password == password);
 
@@ -24,13 +25,20 @@ namespace server.Controllers
         var token = TokenService.GenerateClientToken(client);
         return Ok(token);
       }
-      if(client == null)
+      return BadRequest("Email ou senha incorretos");
+    }
+
+    [Route("/prestador")]
+    [HttpPost]
+    public IActionResult AuthPrestador(string email, string password)
+    {
+      var prestador = _context.Prestador.FirstOrDefault(prestador => prestador.Email == email && prestador.Password == password);
+
+      if (prestador != null)
       {
-        var prestador = _context.Prestador.FirstOrDefault(prestador => prestador.Email == email && prestador.Password == password);
         var token = TokenService.GenerateClientToken(prestador);
         return Ok(token);
-      }
-
+      } 
       return BadRequest("Email ou senha incorretos");
     }
   }
