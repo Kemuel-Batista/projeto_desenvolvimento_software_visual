@@ -52,6 +52,7 @@ builder.Services.AddTransient<ICategoriaServicoRepository, CategoriaServicoRepos
 builder.Services.AddTransient<IPrestadoresRepository, PrestadoresRepository>();
 builder.Services.AddTransient<IServicosRepository, ServicosRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddTransient<IAvaliacaoRepository,AvaliacaoRepository>();
 
 var key = Encoding.ASCII.GetBytes(server.Key.Secret);
 
