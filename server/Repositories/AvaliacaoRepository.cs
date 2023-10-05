@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using server.Models;
 
 namespace server
@@ -5,39 +6,58 @@ namespace server
   public class AvaliacaoRepository : IAvaliacaoRepository
   {
     private readonly ConnectionContext _context = new();
-    private readonly ILogger<AvaliacaoRepository> _logger;
-
-    public AvaliacaoRepository(ILogger<AvaliacaoRepository> logger) => _logger = logger;
-
-    public async void Add(Avaliacao avaliacao)
+    public async Task Add(int id_pedido, string avaliacao, string cpf)
     {
-      var pedido_exists = await _context.Pedido.FindAsync(avaliacao.id_pedido);
+      var pedidoExists = await _context.Pedido.FindAsync(id_pedido);
 
-      if (pedido_exists != null)
+      if (pedidoExists != null)
       {
-        _logger.LogInformation("Pedido existe");
-        var avaliacaoExists = _context.avaliacao.Find(avaliacao.id_pedido);
+        var avaliacaoExists = await _context.avaliacao
+            .Where(a => a.id_pedido == id_pedido)
+            .FirstOrDefaultAsync();
+        
+        string conta = pesquisarCpf(cpf);
 
-        // Se não existe uma avaliacao com o id_pedido então cadastrar 
         if (avaliacaoExists == null)
         {
-           _logger.LogInformation("Nao existe avaliacao para esse pedido");
-          await _context.avaliacao.AddAsync(avaliacao);
-          await _context.SaveChangesAsync();
+          if(conta.Equals("Prestador")){
+            Avaliacao avaliacaoPrestador = new()
+            {
+              avaliacao_prestador = avaliacao,
+              cpf_prestador = cpf,
+              id_pedido = id_pedido
+            };
+            await _context.avaliacao.AddAsync(avaliacaoPrestador);
+          } else {
+            Avaliacao avaliacaoCliente = new()
+            {
+              avaliacao_cliente = avaliacao,
+              cpf_cliente = cpf,
+              id_pedido = id_pedido
+            };
+            await _context.avaliacao.AddAsync(avaliacaoCliente);
+          }
         }
         else
         {
-           _logger.LogInformation("existe avaliacao para esse pedido");
-          // Editar avaliacao
-          _context.avaliacao.Update(avaliacao);
-          await _context.SaveChangesAsync();
+          if(conta.Equals("Prestador")){
+            avaliacaoExists.avaliacao_prestador = avaliacao;
+            avaliacaoExists.cpf_prestador = cpf;
+          } else {
+            avaliacaoExists.avaliacao_cliente = avaliacao;
+            avaliacaoExists.cpf_cliente = cpf;
+          }
+          // Atualizar a avaliação
+          _context.avaliacao.Update(avaliacaoExists);
         }
+
+        await _context.SaveChangesAsync();
       }
     }
-
-    public async void Update(string conta, int id, string avaliacao)
+    public async Task Update(string conta, int id, string avaliacao)
     {
-      var avaliacao_exists = await _context.avaliacao.FindAsync(id);
+      var avaliacao_exists = await _context.avaliacao.Where(a => a.id_pedido == id).FirstOrDefaultAsync();
+
       if (avaliacao_exists != null)
       {
         if (conta.Equals("Prestador"))
@@ -61,7 +81,6 @@ namespace server
         _context.SaveChanges();
       }
     }
-
     public IEnumerable<Avaliacao> List()
     {
       return _context.avaliacao.ToList();

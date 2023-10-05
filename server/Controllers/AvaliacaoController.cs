@@ -24,55 +24,39 @@ namespace server.Controllers
 
       if (cpf != null)
       {
-        string conta = _avaliacaoRepository.pesquisarCpf(cpf);
-
-        if (conta.Equals("Prestador"))
-        {
-          Avaliacao avaliacaoprestador = new()
-          {
-            id_pedido = id_pedido,
-            avaliacao_prestador = avaliacao,
-            cpf_prestador = cpf
-          };
-          _avaliacaoRepository.Add(avaliacaoprestador);
-          return Ok();
-        }
-        if (conta.Equals("Cliente"))
-        {
-          Avaliacao avaliacaoCliente = new()
-          {
-            id_pedido = id_pedido,
-            avaliacao_cliente = avaliacao,
-            cpf_cliente = cpf
-          };
-          _avaliacaoRepository.Add(avaliacaoCliente);
-          return Ok();
-        }
+        _avaliacaoRepository.Add(id_pedido, avaliacao, cpf);
+        return Ok();
       }
       return BadRequest("CPF não existe!");
 
     }
 
+    [Authorize]
     [HttpPut]
     public ActionResult Alterar(int id, string avaliacao)
     {
       var cpf = User?.Identity?.Name;
-      string conta = _avaliacaoRepository.pesquisarCpf(cpf);
 
-      if (id != 0)
-      {
-        _avaliacaoRepository.Update(conta, id, avaliacao);
-        return Ok();
+      if(cpf != null){
+        string conta = _avaliacaoRepository.pesquisarCpf(cpf);
+
+        if (id != 0)
+        {
+          _avaliacaoRepository.Update(conta, id, avaliacao);
+          return Ok();
+        }
       }
       return BadRequest("id não existe!");
     }
 
+    [Authorize]
     [HttpGet]
     public IEnumerable<Avaliacao> Get()
     {
       return _avaliacaoRepository.List();
     }
 
+    [Authorize]
     [HttpDelete]
     public ActionResult DeleteAvaliacao(int id)
     {
