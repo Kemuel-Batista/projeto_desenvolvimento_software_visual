@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { ClientesService } from './cliente/clientes.service';
+import { ClientesService } from './services/clientes.service';
 import { ClientesComponent } from './components/clientes/clientes.component'
 
 @NgModule({
