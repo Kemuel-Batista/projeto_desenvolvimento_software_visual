@@ -54,6 +54,8 @@ builder.Services.AddTransient<IServicosRepository, ServicosRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
 builder.Services.AddTransient<IAvaliacaoRepository,AvaliacaoRepository>();
 
+builder.Services.AddCors();
+
 var key = Encoding.ASCII.GetBytes(server.Key.Secret);
 
 // Aqui estamos informando que tipo de autenticação o server terá
@@ -89,6 +91,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(opcoes => opcoes
+.WithOrigins("http://localhost:4200")
+.AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 app.UseAuthorization();
 
