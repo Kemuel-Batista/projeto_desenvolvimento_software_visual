@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-/*import { Cliente } from 'src/app/clientes/cliente';
-import { ClientesService } from 'src/app/services/clientes.service';
+import { Cliente } from 'src/app/models/cliente';
+import { ClientesService } from 'src/app/services/clientes/clientes.service';
 
 @Component({
   selector: 'app-clientes',
@@ -23,4 +23,4 @@ export class ClientesComponent implements OnInit {
   enviarFormulario(): void {
     const cliente: Cliente = this.formulario.value
   }
-}*/
+}

@@ -50,7 +50,11 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
 builder.Services.AddTransient<ICategoriaServicoRepository, CategoriaServicoRepository>();
 builder.Services.AddTransient<IPrestadoresRepository, PrestadoresRepository>();
+builder.Services.AddTransient<IServicosRepository, ServicosRepository>();
+builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddTransient<IAvaliacaoRepository,AvaliacaoRepository>();
 
+builder.Services.AddCors();
 
 var key = Encoding.ASCII.GetBytes(server.Key.Secret);
 
@@ -87,6 +91,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(opcoes => opcoes
+.WithOrigins("http://localhost:4200")
+.AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 app.UseAuthorization();
 

@@ -9,10 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
-/*
+
 import { ClientesService } from './services/clientes/clientes.service';
 import { ClientesComponent } from './components/clientes/clientes.component';
-*/
+
 import { ServicosService } from './services/servicos/servicos.service'
 import { ServicosComponent } from './components/servicos/servicos.component';
 
@@ -31,7 +31,7 @@ import { AvaliacaoComponent } from './components/avaliacao/avaliacao.component';
 @NgModule({
   declarations: [
     AppComponent,
-    //ClientesComponent,
+    ClientesComponent,
     ServicosComponent,
     PrestadoresComponent,
     PedidosComponent,
@@ -46,7 +46,7 @@ import { AvaliacaoComponent } from './components/avaliacao/avaliacao.component';
     ReactiveFormsModule,
     ModalModule
   ],
-  providers: [HttpClientModule, ServicosService, PrestadoresService, PedidosService, CategoriaServicosService, AvaliacaoService],
+  providers: [HttpClientModule, ClientesService, ServicosService, PrestadoresService, PedidosService, CategoriaServicosService, AvaliacaoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

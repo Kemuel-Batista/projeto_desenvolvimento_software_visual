@@ -13,14 +13,14 @@ import { CategoriaServico } from '../../models/categoria-servico';
 export class CategoriaServicosComponent implements OnInit{
 
   formulario: any;
-  tituloFormulario: string = '';
+  tituloFormulario = '';
   constructor(private categoriaService : CategoriaServicosService) { }
   ngOnInit(): void {
   this.tituloFormulario = 'Nova Categoria';
   this.formulario = new FormGroup({
   descricao: new FormControl(null)
   })
-  }enviarFormulario(): void 
+  }enviarFormulario(): void
   {const categoria : CategoriaServico = this.formulario.value;
   this.categoriaService.cadastrar(categoria).subscribe(result => {
   alert('Categoria cadastrada com sucesso.');

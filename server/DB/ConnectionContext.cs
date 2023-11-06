@@ -7,6 +7,9 @@ public class ConnectionContext : DbContext
   public DbSet<Cliente> Cliente { get; set; }
   public DbSet<CategoriaServico> Categoria { get; set; }
   public DbSet<Prestadores> Prestador { get; set; }
+  public DbSet<Servicos> Servicos { get; set; }
+  public DbSet<Pedido> Pedido { get; set; }
+  public DbSet<Avaliacao> avaliacao { get; set; }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
@@ -15,7 +18,7 @@ public class ConnectionContext : DbContext
       "Port=5432;" +
       "Database=projeto_ds_visual;" +
       "User Id=postgres;" +
-      "Password=gui_123@guilherme;"
+      "Password=password;"
     );
   }
 }
