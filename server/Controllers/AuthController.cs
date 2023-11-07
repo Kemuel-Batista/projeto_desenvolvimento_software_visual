@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using server.Views;
 using server.Services;
 
 namespace server.Controllers
@@ -14,11 +15,11 @@ namespace server.Controllers
       _context = context;
     }
 
-    [Route("/cliente")]
+    [Route("/auth/cliente")]
     [HttpPost]
-    public IActionResult AuthCliente(string email, string password)
+    public IActionResult AuthCliente([FromBody] LoginView login)
     {
-      var client = _context.Cliente.FirstOrDefault(client => client.Email == email && client.Password == password);
+      var client = _context.Cliente.FirstOrDefault(client => client.Email == login.email && client.Password == login.password);
 
       if (client != null)
       {
@@ -28,11 +29,11 @@ namespace server.Controllers
       return BadRequest("Email ou senha incorretos");
     }
 
-    [Route("/prestador")]
+    [Route("/auth/prestador")]
     [HttpPost]
-    public IActionResult AuthPrestador(string email, string password)
+    public IActionResult AuthPrestador([FromBody] LoginView login)
     {
-      var prestador = _context.Prestador.FirstOrDefault(prestador => prestador.Email == email && prestador.Password == password);
+      var prestador = _context.Prestador.FirstOrDefault(prestador => prestador.Email == login.email && prestador.Password == login.password);
 
       if (prestador != null)
       {
