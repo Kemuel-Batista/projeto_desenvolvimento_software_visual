@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Servico } from 'src/app/prestadores/models/servico';
+import { Servico } from '../../models/servico';
 
 const httpOptions = {
   headers: new HttpHeaders({
