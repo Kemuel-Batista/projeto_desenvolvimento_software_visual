@@ -1,1 +1,61 @@
-<p>dashboard works!</p>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page do Principal Produto</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Contrate Já</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/clientes/dashboard">Início</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="section-container py-5">
+    <h2>
+      Serviços disponiveis
+    </h2>
+    <table class="table table-inverse table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome do Serviço</th>
+          <th>Valor</th>
+          <th>Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let servico of servicos">
+          <td>{{ servico.id }}</td>
+          <td>{{ servico.nome }}</td>
+          <td>{{ servico.valor }}</td>
+          <td>
+            <button type="button"
+              [swal]="{ text: 'Deseja mesmo contratar esse serviço?', showCancelButton: true }"
+              (confirm)="newOrder(servico.id)">
+              Contratar serviço
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

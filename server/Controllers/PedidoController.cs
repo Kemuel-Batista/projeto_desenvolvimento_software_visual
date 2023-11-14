@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
+using server.Views;
 
 namespace server.Controllers
 {
@@ -16,7 +17,7 @@ namespace server.Controllers
     
     [Authorize]
     [HttpPost]
-    public ActionResult Add(int id_servico)
+    public ActionResult Add([FromBody] AddServiceView serviceView)
     {
       var cpf = User?.Identity?.Name;
       if(cpf == null){
@@ -24,7 +25,7 @@ namespace server.Controllers
       }
 
       // Status inicialmente irá se P (Pendente)
-      var addPedido = new Pedido(id_servico, cpf, "P");
+      var addPedido = new Pedido(serviceView.id_servico, cpf, "P");
       _pedido_repository.Add(addPedido);
       return Ok();
     }
