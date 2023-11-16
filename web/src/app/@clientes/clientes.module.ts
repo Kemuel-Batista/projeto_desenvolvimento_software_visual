@@ -7,11 +7,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    PedidosComponent,
+    SignupComponent
   ],
   imports: [
     CommonModule,

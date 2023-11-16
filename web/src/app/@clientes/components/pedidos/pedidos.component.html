@@ -31,29 +31,21 @@
 
   <div class="section-container py-5">
     <h2>
-      Serviços disponiveis
+      Lista de Pedidos
     </h2>
     <table class="table table-inverse table-hover">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nome do Serviço</th>
-          <th>Valor</th>
-          <th>Opções</th>
+          <th>Status do Pedido</th>
+          <th>Data</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let servico of servicos">
-          <td>{{ servico.id }}</td>
-          <td>{{ servico.nome }}</td>
-          <td>{{ servico.valor }}</td>
-          <td>
-            <button type="button"
-              [swal]="{ text: 'Deseja mesmo contratar esse serviço?', showCancelButton: true }"
-              (confirm)="newOrder(servico.id)">
-              Contratar serviço
-            </button>
-          </td>
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.id }}</td>
+          <td>{{ pedido.status }}</td>
+          <td>{{ pedido.created_At }}</td>
         </tr>
       </tbody>
       <tbody>

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import urlJoin from 'url-join';
 import { environment } from 'src/environments/environment.development';
 import { LoginService } from 'src/app/@clientes/services/login/login.service';
+import { Pedidos } from 'src/app/models/pedidos';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,15 @@ export class PedidoService {
     return this.http.post(url, {
       id_servico: idServico
     }, httpOptions);
+  }
+
+  getPedidos() {
+    const url = urlJoin(environment.baseURL, 'pedido');
+
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.get<Pedidos[]>(url, httpOptions);
   }
 }

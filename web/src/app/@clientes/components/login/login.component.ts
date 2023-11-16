@@ -43,9 +43,6 @@ export class LoginComponent {
 
     if (!this.loginForm.valid || email == null || password == null) return;
 
-    console.log(email)
-    console.log(password)
-
     this.clientesService.login(email, password)
     .subscribe({
       next: (response: ClienteLoginResponse) => {
