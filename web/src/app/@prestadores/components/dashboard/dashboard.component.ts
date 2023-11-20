@@ -19,8 +19,15 @@ export class DashboardComponent implements OnInit {
   servicos: Servicos[] = []
   categoriaServicos: CategoriaServico[] = []
   modalRef?: BsModalRef;
+  servicoSelecionado: any;
 
   addServiceForm = this.form.group({
+    nome: new FormControl('', [Validators.required, Validators.nullValidator]),
+    valor: new FormControl(0, [Validators.required, Validators.nullValidator]),
+    id_categoria: new FormControl(0, [Validators.required, Validators.nullValidator])
+  });
+
+  updateServiceForm = this.editForm.group({
     nome: new FormControl('', [Validators.required, Validators.nullValidator]),
     valor: new FormControl(0, [Validators.required, Validators.nullValidator]),
     id_categoria: new FormControl(0, [Validators.required, Validators.nullValidator])
@@ -34,6 +41,7 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private modalService: BsModalService,
     private form: FormBuilder,
+    private editForm: FormBuilder
   ) {
     try {
       const jwt = this.loginService.jwt;
@@ -69,6 +77,20 @@ export class DashboardComponent implements OnInit {
 
   openServicoModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  editServicoModal(template: TemplateRef<any>) {
+    const config = {
+      initialState: {
+        servico: this.servicoSelecionado,
+      },
+    };
+    this.modalRef = this.modalService.show(template, config);
+    this.updateServiceForm.patchValue({
+      nome: this.servicoSelecionado?.nome,
+      valor: this.servicoSelecionado?.valor,
+      id_categoria: this.servicoSelecionado?.id_categoria,
+    });
   }
 
   sendAddNewService(event: Event) {

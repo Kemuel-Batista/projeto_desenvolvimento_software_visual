@@ -4,4 +4,8 @@ namespace server.Views {
     public int valor { get; set; }
     public int id_categoria { get; set; }
   }
+
+  public class UpdateServiceView : CreateServiceView {
+    public int id { get; set; }
+  }
 }

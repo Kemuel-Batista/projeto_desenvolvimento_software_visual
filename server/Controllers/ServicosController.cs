@@ -28,14 +28,14 @@ namespace server.Controllers
     }
 
     [HttpPut]
-    public ActionResult Alterar(int id, string nome, double valor, int idCategoria)
+    public ActionResult Alterar([FromBody] UpdateServiceView service)
     {
       var cpfPrestador = User?.Identity?.Name;
       if(cpfPrestador != null)
       {
-        if(id != 0)
+        if(service.id != 0)
         {
-          _servicosRepository.Update(id, nome, valor, idCategoria, cpfPrestador);
+          _servicosRepository.Update(service.id, service.nome, service.valor, service.id_categoria, cpfPrestador);
           return Ok();
         } else {
           return BadRequest("ID não pode ser nulo!");

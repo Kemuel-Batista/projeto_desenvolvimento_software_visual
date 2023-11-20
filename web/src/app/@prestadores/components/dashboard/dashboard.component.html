@@ -49,11 +49,13 @@
         <td>{{ servico.nome }}</td>
         <td>{{ servico.valor }}</td>
         <td>
-          <!-- <button type="button"
-            [swal]="{ text: 'Deseja mesmo contratar esse serviço?', showCancelButton: true }"
-            (confirm)="newOrder(servico.id)">
-            Contratar serviço
-          </button> -->
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            (click)="servicoSelecionado = servico; editServicoModal(editModal)"
+          >
+            Editar
+          </button>
         </td>
       </tr>
     </tbody>
@@ -110,6 +112,60 @@
         </select>
       </div>
       <button type="submit" [disabled]="addServiceForm.invalid" class="btn btn-primary">Cadastrar novo serviço</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #editModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar serviço</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addServiceForm" (ngSubmit)="sendAddNewService($event)">
+      <div class="form-group">
+        <label for="nome">Nome do Serviço</label>
+        <input
+          class="form-control"
+          type="text"
+          id="nome"
+          name="nome"
+          placeholder="Nome do Serviço"
+          [formControl]="updateServiceForm.controls.nome"
+          [value]="servicoSelecionado?.nome"
+        />
+      </div>
+      <div class="form-group">
+        <label for="valor">Valor do Serviço</label>
+        <input
+          class="form-control"
+          type="number"
+          id="valor"
+          name="valor"
+          placeholder="Valor do Serviço"
+          [formControl]="updateServiceForm.controls.valor"
+          [value]="servicoSelecionado?.valor"
+        />
+      </div>
+      <div class="form-group">
+        <label for="valor">Categoria do Serviço</label>
+        <select
+          formControlName="id_categoria"
+          [ngModel]="updateServiceForm.controls.id_categoria"
+          class="form-control form-control-sm"
+        >
+          <option
+            *ngFor="let categoria of categoriaServicos"
+            value="{{categoria.id}}"
+            [selected]="categoria.id === servicoSelecionado?.id_categoria"
+          >
+            {{categoria.descricao}}
+          </option>
+        </select>
+      </div>
+      <button type="submit" [disabled]="updateServiceForm.invalid" class="btn btn-primary">Editar serviço</button>
     </form>
   </div>
 </ng-template>
