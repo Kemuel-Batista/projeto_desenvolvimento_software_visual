@@ -15,24 +15,26 @@ namespace server.Controllers
     }
     
     [HttpPost]
-    public ActionResult Add(string Descricao)
+    public ActionResult Add(CategoriaServico categoriaServico)
     {
-      var addCategoria = new CategoriaServico(Descricao);
+      var addCategoria = new CategoriaServico(categoriaServico.Descricao);
       _categoriaRepository.Add(addCategoria);
       return Ok();
     }
 
     [HttpPut]
-    public ActionResult Alterar(int id, string descricao)
+    [Route("{id}")]
+    public ActionResult Alterar(int id, CategoriaServico categoriaServico)
     {
       if(id != 0){
-        _categoriaRepository.Update(id, descricao);
+        _categoriaRepository.Update(categoriaServico.Id, categoriaServico.Descricao);
         return Ok();
       }
       return BadRequest("Erro ao alterar");
     }
 
     [HttpDelete]
+    [Route("{id}")]
     public ActionResult Delete(int id)
     {
       if(id != 0){
@@ -46,6 +48,12 @@ namespace server.Controllers
     public IEnumerable<CategoriaServico> Get()
     {
       return _categoriaRepository.List();
+    }
+    [HttpGet("{id}")]
+    public ActionResult ListId(int id)
+    {
+      var categoria = _categoriaRepository.ListId(id);
+      return Ok(categoria);
     }
   }
 }

@@ -1,10 +1,10 @@
 export class CategoriaServico {
-  Id: number;
-  Descricao = '';
+  id: number;
+  descricao = '';
 
-  constructor(id: number, descricao: string)
+  constructor(Id: number, Descricao: string)
   {
-    this.Id = id;
-    this.Descricao = descricao;
+    this.id = Id;
+    this.descricao = Descricao;
   }
 }

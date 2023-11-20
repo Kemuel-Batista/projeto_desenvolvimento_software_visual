@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CategoriaServicosService } from '../../services/categoria-servicos/categoria-servicos.service';
-import { CategoriaServico } from '../../models/categoria-servico';
+import { CategoriaServicosService } from '../../../services/categoria-servicos/categoria-servicos.service';
+import { CategoriaServico } from '../../../models/categoria-servico';
 
 @Component({
   selector: 'app-categoria-servicos',

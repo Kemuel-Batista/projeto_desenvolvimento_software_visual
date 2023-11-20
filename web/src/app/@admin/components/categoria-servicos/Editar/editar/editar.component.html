@@ -1,0 +1,32 @@
+<div class="container p-5">
+    <div class="row">
+    <div class="col-6 border border-light rounded p-5 shadow">
+    <form #form="ngForm" (ngSubmit)="EditarCategoria()">
+    <div class = "form-group">
+    <div *ngIf="categorias">
+
+    </div>
+    <label>Id</label>
+    <input type = "text" class="form-control form-control-sm" id="id" name="id"  [(ngModel)]="categorias.id" readonly/>
+    </div>
+    <div class = "form-group">  
+    <label>Descricao</label>
+    <input type = "text" class="form-control form-control-sm" id="Descricao" name="Descricao" [(ngModel)]="categorias.descricao"/>
+    </div>
+    <div class = "container">
+    <div class="row">
+    <div>
+    <button type="submit" class="btn btn-sm btn-outline-secondary">Salvar</button>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="ExcluirCategoria(categorias.id)">Excluir</button>
+    </div>
+    <div class="pl-1">
+    <button type="button" class="btn btn-sm btn-light" routerLink="/admin/listar" >Voltar</button>
+    </div>
+    </div>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>

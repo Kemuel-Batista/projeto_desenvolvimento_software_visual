@@ -8,5 +8,7 @@ namespace server.Models
     void Update(int id, string descricao);
     void Delete(int id);
     IEnumerable<CategoriaServico> List();
+    CategoriaServico ListId(int id);
+
   }
 }

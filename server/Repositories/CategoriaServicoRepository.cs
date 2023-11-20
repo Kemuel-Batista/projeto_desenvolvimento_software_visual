@@ -35,6 +35,10 @@ namespace server
             return _context.Categoria.ToList();
         }
 
+        public CategoriaServico ListId(int id)
+        {
+           return  _context.Categoria.Where(categoria => categoria.Id == id).FirstOrDefault();
+        }
         
     }
 }

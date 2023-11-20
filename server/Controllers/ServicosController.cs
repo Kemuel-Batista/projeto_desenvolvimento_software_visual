@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
+using server.Views;
 
 namespace server.Controllers
 {
@@ -14,12 +15,12 @@ namespace server.Controllers
     }
     
     [HttpPost]
-    public ActionResult Add(string nome, double valor, int idCategoria)
+    public ActionResult Add([FromBody] CreateServiceView service)
     {
       var cpfPrestador = User?.Identity?.Name;
       if(cpfPrestador != null)
       {
-        var addServicos = new Servicos(nome,valor,idCategoria,cpfPrestador);
+        var addServicos = new Servicos(service.nome, service.valor, service.id_categoria, cpfPrestador);
         _servicosRepository.Add(addServicos);
         return Ok();
       }

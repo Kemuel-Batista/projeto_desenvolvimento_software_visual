@@ -1,0 +1,115 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Contrate Já</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/prestadores/dashboard">Início</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/prestadores/pedidos">Pedidos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/prestadores">Sair</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="section-container py-5">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-6">
+        <h2>
+          Seus serviços cadastrados
+        </h2>
+      </div>
+      <div class="col-sm-6" align="right">
+        <button type="button" class="btn btn-primary btn-sm" (click)="openServicoModal(template)">
+          Cadastrar novo serviço
+        </button>
+      </div>
+    </div>
+  </div>
+  <table class="table table-inverse table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome do Serviço</th>
+        <th>Valor</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let servico of servicos">
+        <td>{{ servico.id }}</td>
+        <td>{{ servico.nome }}</td>
+        <td>{{ servico.valor }}</td>
+        <td>
+          <!-- <button type="button"
+            [swal]="{ text: 'Deseja mesmo contratar esse serviço?', showCancelButton: true }"
+            (confirm)="newOrder(servico.id)">
+            Contratar serviço
+          </button> -->
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+
+    </tbody>
+  </table>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Cadastrar novo serviço</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addServiceForm" (ngSubmit)="sendAddNewService($event)">
+      <div class="form-group">
+        <label for="nome">Nome do Serviço</label>
+        <input
+          class="form-control"
+          type="text"
+          id="nome"
+          name="nome"
+          placeholder="Nome do Serviço"
+          [formControl]="addServiceForm.controls.nome"
+        />
+      </div>
+      <div class="form-group">
+        <label for="valor">Valor do Serviço</label>
+        <input
+          class="form-control"
+          type="number"
+          id="valor"
+          name="valor"
+          placeholder="Valor do Serviço"
+          [formControl]="addServiceForm.controls.valor"
+        />
+      </div>
+      <div class="form-group">
+        <label for="valor">Categoria do Serviço</label>
+        <select
+          formControlName="id_categoria"
+          [ngModel]="addServiceForm.controls.id_categoria.value"
+          class="form-control form-control-sm"
+        >
+          <option
+            *ngFor="let categoria of categoriaServicos"
+            value="{{categoria.id}}"
+          >
+            {{categoria.descricao}}
+          </option>
+        </select>
+      </div>
+      <button type="submit" [disabled]="addServiceForm.invalid" class="btn btn-primary">Cadastrar novo serviço</button>
+    </form>
+  </div>
+</ng-template>
