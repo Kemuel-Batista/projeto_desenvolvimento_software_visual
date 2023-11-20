@@ -37,6 +37,16 @@ export class ServicosService {
     return this.http.get<Servicos[]>(url, httpOptions);
   }
 
+  getMyServices() {
+    const url = urlJoin(environment.baseURL, 'servicos', 'myservices');
+
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.get<Servicos[]>(url, httpOptions);
+  }
+
   add(nome: string, valor: number, id_categoria: number) {
     const url = urlJoin(environment.baseURL, 'servicos');
 

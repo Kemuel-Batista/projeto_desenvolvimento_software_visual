@@ -6,7 +6,8 @@ namespace server.Models
   {
     void Add(Servicos servicos);
     void Update(int id, string nome, double valor, int idCategoria, string cpfPrestador);
-    void DeleteAccount(int id);
+    void delete(int id);
     IEnumerable<Servicos> List();
+    IEnumerable<Servicos> GetMyServices(string cpf);
   }
 }

@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getServicos(): void {
-    this._servicos.getServicos()
+    this._servicos.getMyServices()
       .subscribe((res: Servicos[]) => {
         this.servicos = res;
       });

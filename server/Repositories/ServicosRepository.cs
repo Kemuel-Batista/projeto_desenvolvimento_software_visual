@@ -24,7 +24,7 @@ namespace server
         await _context.SaveChangesAsync();
       }
     }
-    public void DeleteAccount(int id)
+    public void delete(int id)
     {
      var servic = _context.Servicos.Find(id);
       if(servic != null)
@@ -37,6 +37,11 @@ namespace server
     public IEnumerable<Servicos> List()
     {
       return _context.Servicos.ToList();
+    }
+
+    public IEnumerable<Servicos> GetMyServices(string cpf)
+    {
+      return _context.Servicos.Where(servico => servico.cpf_prestador == cpf).ToList();
     }
   }
 }

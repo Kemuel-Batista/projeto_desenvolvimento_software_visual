@@ -50,11 +50,23 @@ namespace server.Controllers
       return _servicosRepository.List();
     }
 
+    [HttpGet("/servicos/myservices")]
+    public ActionResult<IEnumerable<Servicos>> GetMyServices()
+    {
+      var cpfPrestador = User?.Identity?.Name;
+      if (cpfPrestador != null)
+      {
+        var services = _servicosRepository.GetMyServices(cpfPrestador);
+        return Ok(services);
+      }
+      return BadRequest("Não foi possível obter os serviços!");
+    }
+
     [HttpDelete]
-    public ActionResult DeleteAccount(int id)
+    public ActionResult delete(int id)
     {
       if(id != 0){
-        _servicosRepository.DeleteAccount(id);
+        _servicosRepository.delete(id);
         return Ok();
       }
       return BadRequest("nome não existe!");
